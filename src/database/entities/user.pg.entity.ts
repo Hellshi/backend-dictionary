@@ -1,6 +1,6 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
-import { BaseEntity } from 'src/database/common/baseEntity';
-import { comparePassword, hashPassword } from 'src/common/utils/hashPassword';
+import { BaseEntity } from '../../database/common/baseEntity';
+import { comparePassword, hashPassword } from '../../common/utils/hashPassword';
 
 @Entity('user')
 export class User extends BaseEntity<User> {

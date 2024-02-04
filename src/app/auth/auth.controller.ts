@@ -3,7 +3,6 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { BasicAuth } from './decorators/basic-auth.decorator';
-import { JwtRefreshAuth } from './decorators/jwt-refresh-auth.decorator';
 import { ValidateLogin } from './decorators/validate-login.decorator';
 import { LoginDto } from './dto/login.dto';
 

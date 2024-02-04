@@ -4,7 +4,6 @@ import { Body, Controller, Post, Request } from '@nestjs/common';
 import { BasicAuth } from './decorators/basic-auth.decorator';
 import { AuthService } from './auth.service';
 import { ValidateLogin } from './decorators/validate-login.decorator';
-import { JwtRefreshAuth } from './decorators/jwt-refresh-auth.decorator';
 import { LoginDto } from './dto/login.dto';
 
 @ApiTags('App', 'Auth')

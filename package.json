@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "generate:entity": "yarn plop --plopfile ./generators/scripts/entity.plopfile.js"
+    "generate:entity": "yarn plop --plopfile ./generators/scripts/entity.plopfile.js",
+    "migration:run": " typeorm-ts-node-commonjs -d ./src/config/postgres.config.ts migration:run "
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
