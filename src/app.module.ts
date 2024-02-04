@@ -4,8 +4,12 @@ import { WordsModule } from './app/words/words.module';
 import { PostgresProviderModule } from './providers/postgres-provider.module';
 import { MongoDbProviderModule } from './providers/mongodb-provider.module';
 import { ConfigModule } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
 import { GenericRepositoryProvider } from './providers/repository-catalog-provider.module';
 import RepositoryCatalog from './database/repositories/common/repositoryCatalog';
+import { AuthModule } from './app/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
+import Config from './config/envConfig';
 
 @Module({
   imports: [
@@ -13,10 +17,17 @@ import RepositoryCatalog from './database/repositories/common/repositoryCatalog'
       isGlobal: true,
       envFilePath: '.env',
     }),
+    JwtModule.register({
+      global: true,
+      secret: Config.getSetting('jwtSecret'),
+      signOptions: { expiresIn: Config.getSetting('jwtExpiresIn') },
+    }),
     UserModule,
     WordsModule,
+    AuthModule,
     PostgresProviderModule,
     MongoDbProviderModule,
+    PassportModule,
   ],
   controllers: [],
   providers: [GenericRepositoryProvider, RepositoryCatalog],

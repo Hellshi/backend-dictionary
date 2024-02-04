@@ -16,6 +16,10 @@ export default class ProdConfigAdapter implements IApplicationConfigAdapter {
       mongoUrl: process.env.MONGODB_URL as string,
       port: process.env.PORT as string,
       pgUrl: process.env.POSTGRES_URL as string,
+      basicPassword: process.env.BASIC_PASSWORD as string,
+      basicUser: process.env.BASIC_USER as string,
+      jwtSecret: process.env.JWT_SECRET as string,
+      jwtExpiresIn: process.env.JWT_EXPIRATION as string,
     };
   }
 

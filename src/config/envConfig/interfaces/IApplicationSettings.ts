@@ -9,4 +9,8 @@ export default interface IApplicationSettings {
   port: string;
   pgUrl: string;
   mongoUrl: string;
+  basicUser: string;
+  basicPassword: string;
+  jwtSecret: string;
+  jwtExpiresIn: string;
 }
