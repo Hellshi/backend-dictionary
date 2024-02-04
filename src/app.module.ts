@@ -4,6 +4,8 @@ import { WordsModule } from './app/words/words.module';
 import { PostgresProviderModule } from './providers/postgres-provider.module';
 import { MongoDbProviderModule } from './providers/mongodb-provider.module';
 import { ConfigModule } from '@nestjs/config';
+import { GenericRepositoryProvider } from './providers/repository-catalog-provider.module';
+import RepositoryCatalog from './database/repositories/common/repositoryCatalog';
 
 @Module({
   imports: [
@@ -17,6 +19,6 @@ import { ConfigModule } from '@nestjs/config';
     MongoDbProviderModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [GenericRepositoryProvider, RepositoryCatalog],
 })
 export class AppModule {}

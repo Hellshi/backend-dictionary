@@ -1,5 +1,5 @@
 import PostgresDataSource from 'src/config/postgres.config';
-import { User } from 'src/database/entities/user/user.pg.entity';
+import { User } from 'src/database/entities/user.pg.entity';
 import BaseRepository from '../common/baseRepository';
 
 export class UserRepository extends BaseRepository<User> {

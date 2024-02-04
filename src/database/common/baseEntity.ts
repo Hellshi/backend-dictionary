@@ -7,7 +7,7 @@ import {
 
 export abstract class BaseEntity<Model> {
   @ApiProperty()
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @ApiProperty()

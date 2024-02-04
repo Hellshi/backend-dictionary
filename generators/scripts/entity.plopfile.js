@@ -16,7 +16,7 @@ module.exports = (plop) => {
     actions: [
       {
         type: 'add',
-        path: '../../src/database/entities/{{camelCase name}}/{{camelCase name}}.{{dbName}}.entity.ts',
+        path: '../../src/database/entities/{{camelCase name}}.{{dbName}}.entity.ts',
         templateFile: '../templates/entity.ts.hbs',
       },
       {
