@@ -1,14 +1,22 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
+import { CreateUserDto } from './types/create-user.dto';
+import { CatchAll } from '@greguintow/catch-decorator';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject('repositoryCatalog')
-    private readonly exampleInstance: RepositoryCatalog,
+    private readonly repositoryCatalog: RepositoryCatalog,
   ) {}
 
-  async test() {
-    return this.exampleInstance.user.findOne({ id: 1 });
+  @CatchAll(() => {
+    throw new BadRequestException('duplicated email');
+  })
+  async createUser(dto: CreateUserDto) {
+    const user = await this.repositoryCatalog.user.insert(dto);
+
+    return user;
   }
 }

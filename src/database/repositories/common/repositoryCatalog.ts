@@ -4,7 +4,7 @@ import { EntityManager } from 'typeorm';
 import IRepositoryCatalog from './interfaces/repositoryCatalog';
 import PostgresDataSource from 'src/config/postgres.config';
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from "../user/user.repository";
+import { UserRepository } from '../user/user.repository';
 //PLOP IMPORT REPOSITORY
 
 @Injectable()
@@ -59,10 +59,7 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
   }
 
   get user(): UserRepository {
-          return this.getRepo<UserRepository>(
-            "user",
-            () => new UserRepository(),
-          );
-        }
-//PLOP INSERT REPOSITORY
+    return this.getRepo<UserRepository>('user', () => new UserRepository());
+  }
+  //PLOP INSERT REPOSITORY
 }
