@@ -1,13 +1,13 @@
 import { DataSource } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import Config from './envConfig';
+import Config, { isLocalEnvironment } from './envConfig';
 
 const PostgresDataSource = new DataSource({
   type: 'postgres',
   url: Config.getSetting('pgUrl'),
-  logging: false /* isLocalEnvironment */,
-  synchronize: false,
-  entities: [__dirname + '/../database/entities/*.entity.{js,ts}'],
+  logging: false,
+  /* synchronize: isLocalEnvironment, */
+  entities: [__dirname + '/../database/entities/*.pg.entity.{js,ts}'],
   migrations: [__dirname + '/../database/migrations/*.{js,ts}'],
   cli: {
     migrationsDir: [__dirname + '/../database/migrations'],

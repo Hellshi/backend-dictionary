@@ -1,0 +1,11 @@
+import PostgresDataSource from 'src/config/postgres.config';
+import { {{ pascalCase name }} } from 'src/database/entities/{{camelCase name}}/{{camelCase name}}.{{dbName}}.entity';
+import BaseRepository from '../common/baseRepository';
+
+export class {{ pascalCase name }}Repository
+  extends BaseRepository<{{ pascalCase name }}>
+{
+  constructor() {
+    super(PostgresDataSource.getRepository({{ pascalCase name }}), {{ pascalCase name }});
+  }
+}

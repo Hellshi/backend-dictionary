@@ -7,5 +7,5 @@ export const MongoDbDataSource = new DataSource({
   url: Config.getSetting('mongoUrl'),
   type: 'mongodb',
   logging: true,
-  entities: [__dirname + '/../database/entities/*.mongo.{js,ts}'],
+  entities: [__dirname + '/../database/entities/*.mongo.entity.{js,ts}'],
 } as MongoConnectionOptions);

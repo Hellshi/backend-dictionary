@@ -1,0 +1,6 @@
+  get {{name}}(): I{{pascalCase name}}Repository {
+    return this.getRepo<I{{pascalCase name}}Repository>(
+      "{{name}}",
+      () => new {{pascalCase name}}Repository(),
+    );
+  }
