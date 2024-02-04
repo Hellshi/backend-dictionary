@@ -1,0 +1,43 @@
+version: '3.2'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: dictionaryapi
+      POSTGRES_USER: dictionaryapi
+      POSTGRES_DB: dictionaryapi
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
+    volumes:
+      - postgres-dictionaryapi-data:/var/lib/postgresql/data
+    networks:
+      - dictionaryapi
+
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - ${MONGODB_PORT}:${MONGODB_PORT}
+    volumes:
+      - mongodb-dictionaryapi-data:/data/db
+    networks:
+      - dictionaryapi
+
+  api:
+    build:
+      context: .
+    ports:
+      - '5001:5001'
+    depends_on:
+      - postgres
+      - mongodb
+    networks:
+      - dictionaryapi
+
+volumes:
+  postgres-dictionaryapi-data:
+    driver: local
+  mongodb-dictionaryapi-data:
+    driver: local
+networks:
+  dictionaryapi:
