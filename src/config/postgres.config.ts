@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import Config from './envConfig';
 
-const AppDataSource = new DataSource({
+const PostgresDataSource = new DataSource({
   type: 'postgres',
   url: Config.getSetting('pgUrl'),
   logging: false /* isLocalEnvironment */,
@@ -15,4 +15,4 @@ const AppDataSource = new DataSource({
   poolSize: 6,
 } as PostgresConnectionOptions);
 
-export default AppDataSource;
+export default PostgresDataSource;
