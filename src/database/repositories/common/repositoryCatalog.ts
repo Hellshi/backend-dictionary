@@ -3,6 +3,7 @@ import { EntityManager } from 'typeorm';
 
 import IRepositoryCatalog from './interfaces/repositoryCatalog';
 import PostgresDataSource from 'src/config/postgres.config';
+import { UserRepository } from '../user/user.repository';
 //PLOP IMPORT REPOSITORY
 
 export default class RepositoryCatalog implements IRepositoryCatalog {
@@ -55,5 +56,8 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
     await this.entityManager.queryRunner?.rollbackTransaction();
   }
 
+  get user(): UserRepository {
+    return this.getRepo<UserRepository>('user', () => new UserRepository());
+  }
   //PLOP INSERT REPOSITORY
 }
