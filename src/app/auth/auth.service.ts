@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<User> {
-    const user = await this.repositoryCatalog.user.findOne({});
+    const user = await this.repositoryCatalog.user.findOne({ email });
 
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
