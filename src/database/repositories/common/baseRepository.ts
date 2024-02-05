@@ -5,6 +5,7 @@ import {
   EntityManager,
   FindOneOptions,
   FindOperator,
+  ILike,
   In,
   LessThan,
   LessThanOrEqual,
@@ -18,8 +19,10 @@ import {
 
 
 import IRepository, { Criteria, Options } from './IRepository'
+import { pagination } from './helpers/pagination'
+import { FiltersParams, PaginationReturn } from './interfaces/baseRepository.interface'
 
-export default class BaseRepository<T extends ObjectLiteral> implements IRepository<T> {
+export default class BaseRepository<T extends ObjectLiteral> {
   protected repository: Repository<T>
   protected objectType: new () => T
 
@@ -207,6 +210,7 @@ export default class BaseRepository<T extends ObjectLiteral> implements IReposit
         relations
       })
   }
+
 
   count(criteria: Criteria<T> | Criteria<T>[]): Promise<number> {
     return this.repository.count({
