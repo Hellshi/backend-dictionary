@@ -36,7 +36,7 @@ module.exports = (plop) => {
         path: '../../src/database/repositories/common/repositoryCatalog.ts',
         template: `get {{name}}(): {{pascalCase name}}Repository {
           return this.getRepo<{{pascalCase name}}Repository>(
-            "{{name}}",
+            "{{camelCase name}}",
             () => new {{pascalCase name}}Repository(),
           );
         }\n$1`,

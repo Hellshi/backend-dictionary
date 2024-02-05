@@ -1,8 +1,22 @@
-import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../database/common/baseEntity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ObjectId,
+  ObjectIdColumn,
+} from 'typeorm';
 
 @Entity('user_history')
-export class UserHistory extends BaseEntity<UserHistory> {
+export class UserHistory {
+  @ObjectIdColumn()
+  _id: ObjectId;
+
   @Column()
-  exampleColumn: string;
+  userId: string;
+
+  @Column()
+  word: string;
+
+  @CreateDateColumn()
+  added: Date;
 }
