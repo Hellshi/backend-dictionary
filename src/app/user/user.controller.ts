@@ -30,4 +30,14 @@ export class UserController {
 
     return this.userService.getUserHistory({ pagination, userId });
   }
+
+  @Get('me')
+  @JwtAuth()
+  async getUserProfile(@Request() req: any) {
+    const {
+      user: { userId },
+    } = req;
+
+    return this.userService.getUserProfile(userId);
+  }
 }

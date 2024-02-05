@@ -33,4 +33,8 @@ export class UserService {
       userId,
     });
   }
+
+  async getUserProfile(userId: string) {
+    return this.repositoryCatalog.user.getUserProfile(userId);
+  }
 }
