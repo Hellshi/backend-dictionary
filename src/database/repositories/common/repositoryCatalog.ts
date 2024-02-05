@@ -5,6 +5,8 @@ import IRepositoryCatalog from './interfaces/repositoryCatalog';
 import PostgresDataSource from 'src/config/postgres.config';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
+import { WordRepository } from '../word/word.repository';
+import { UserHistoryRepository } from "../userHistory/userHistory.repository";
 //PLOP IMPORT REPOSITORY
 
 @Injectable()
@@ -61,5 +63,14 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
   get user(): UserRepository {
     return this.getRepo<UserRepository>('user', () => new UserRepository());
   }
-  //PLOP INSERT REPOSITORY
+  get word(): WordRepository {
+    return this.getRepo<WordRepository>('word', () => new WordRepository());
+  }
+  get user-history(): UserHistoryRepository {
+          return this.getRepo<UserHistoryRepository>(
+            "user-history",
+            () => new UserHistoryRepository(),
+          );
+        }
+//PLOP INSERT REPOSITORY
 }

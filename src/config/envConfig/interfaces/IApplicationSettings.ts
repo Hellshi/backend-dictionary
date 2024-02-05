@@ -13,4 +13,5 @@ export default interface IApplicationSettings {
   basicPassword: string;
   jwtSecret: string;
   jwtExpiresIn: string;
+  proxyUrl: string;
 }

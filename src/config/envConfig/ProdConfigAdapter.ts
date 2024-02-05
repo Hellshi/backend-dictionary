@@ -20,6 +20,7 @@ export default class ProdConfigAdapter implements IApplicationConfigAdapter {
       basicUser: process.env.BASIC_USER as string,
       jwtSecret: process.env.JWT_SECRET as string,
       jwtExpiresIn: process.env.JWT_EXPIRATION as string,
+      proxyUrl: process.env.PROXY_URL as string,
     };
   }
 

@@ -9,6 +9,7 @@ import { GenericRepositoryProvider } from './providers/repository-catalog-provid
 import RepositoryCatalog from './database/repositories/common/repositoryCatalog';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ProxyModule } from './app/proxy/proxy.module';
 import Config from './config/envConfig';
 
 @Module({
@@ -28,6 +29,7 @@ import Config from './config/envConfig';
     PostgresProviderModule,
     MongoDbProviderModule,
     PassportModule,
+    ProxyModule,
   ],
   controllers: [],
   providers: [GenericRepositoryProvider, RepositoryCatalog],
