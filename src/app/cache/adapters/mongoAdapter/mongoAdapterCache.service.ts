@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { WordObject } from 'src/app/proxy/adapters/types/wordsApiResponse';
-import { MongoDbDataSource } from 'src/config/mongodb.config';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 
 @Injectable()

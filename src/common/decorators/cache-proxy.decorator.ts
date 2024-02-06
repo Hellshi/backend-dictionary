@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { CacheService } from 'src/app/cache/cache.service';
 
-export const CacheProxyDecoratorResponse = (): MethodDecorator => {
+export const CacheProxyResponseDecorator = (): MethodDecorator => {
   const injectService = Inject(CacheService);
 
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {

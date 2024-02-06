@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import Config from './config/envConfig';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { WriteFilesService } from './app/write-files/write-files.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,5 +20,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(Config.getSetting('port'));
+
+  await app.get(WriteFilesService).writeChunks();
 }
 bootstrap();
