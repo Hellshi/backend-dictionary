@@ -6,4 +6,12 @@ export class WordRepository extends BaseRepository<Word> {
   constructor() {
     super(PostgresDataSource.getRepository(Word), Word);
   }
+
+  async migrateWords(chunk: Word[]) {
+    return this.repository
+      .createQueryBuilder('word')
+      .insert()
+      .values(chunk)
+      .execute();
+  }
 }

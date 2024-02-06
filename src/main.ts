@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import Config from './config/envConfig';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { FilesService } from './app/files/files.service';
+import { WordsService } from './app/words/words.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +21,6 @@ async function bootstrap() {
 
   await app.listen(Config.getSetting('port'));
 
-  await app.get(FilesService).readChunks();
+  await app.get(WordsService).migrateDictionary();
 }
 bootstrap();

@@ -12,7 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ProxyModule } from './app/proxy/proxy.module';
 import { FavoritesModule } from './app/favorites/favorites.module';
 import { CacheModule } from './app/cache/cache.module';
-import { WriteFilesModule } from './app/files/files.module';
+import { FilesModule } from './app/files/files.module';
 import Config from './config/envConfig';
 
 @Module({
@@ -35,7 +35,7 @@ import Config from './config/envConfig';
     ProxyModule,
     FavoritesModule,
     CacheModule,
-    WriteFilesModule,
+    FilesModule,
   ],
   controllers: [],
   providers: [GenericRepositoryProvider, RepositoryCatalog],

@@ -34,15 +34,19 @@ export class FilesService {
     return this.writeFiles(Object.keys(dictionary), chunkSize);
   }
 
-  async readChunks() {
-    const files = this.fs.readdirSync(this.folder);
+  removeFile(file: string) {
+    return this.fs.unlinkSync(file);
+  }
 
-    for (const file of files) {
-      const data = this.fs.readFileSync(`${this.folder}/${file}`, {
-        encoding: 'utf8',
-      });
-      const words = JSON.parse(data);
-      console.log(words[0]);
-    }
+  readDirSync(folder: string = this.folder) {
+    return this.fs.readdirSync(folder);
+  }
+
+  readChunks(file: string) {
+    const data = this.fs.readFileSync(`${this.folder}/${file}`, {
+      encoding: 'utf8',
+    });
+
+    return JSON.parse(data);
   }
 }

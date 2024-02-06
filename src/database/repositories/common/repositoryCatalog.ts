@@ -9,6 +9,7 @@ import { WordRepository } from '../word/word.repository';
 import { UserHistoryRepository } from '../userHistory/userHistory.repository';
 import { UserFavoritesRepository } from '../userFavorites/userFavorites.repository';
 import { CacheRepository } from '../cache/cache.repository';
+import { WordMigrationStatusRepository } from '../wordMigrationStatus/wordMigrationStatus.repository';
 //PLOP IMPORT REPOSITORY
 
 @Injectable()
@@ -86,5 +87,11 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
     );
   }
 
+  get wordMigrationStatus(): WordMigrationStatusRepository {
+    return this.getRepo<WordMigrationStatusRepository>(
+      'wordMigrationStatus',
+      () => new WordMigrationStatusRepository(),
+    );
+  }
   //PLOP INSERT REPOSITORY
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../database/common/baseEntity';
 import { UserFavorites } from './userFavorites.pg.entity';
 
@@ -7,6 +7,6 @@ export class Word extends BaseEntity<Word> {
   @Column({ unique: true })
   word: string;
 
-  @ManyToOne(() => UserFavorites, (userFavorites) => userFavorites.word)
+  @OneToMany(() => UserFavorites, (userFavorites) => userFavorites.word)
   favorites?: UserFavorites[];
 }

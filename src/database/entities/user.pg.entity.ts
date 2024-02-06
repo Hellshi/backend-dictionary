@@ -1,4 +1,4 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../database/common/baseEntity';
 import { comparePassword, hashPassword } from '../../common/utils/hashPassword';
 import { UserFavorites } from './userFavorites.pg.entity';
@@ -14,7 +14,7 @@ export class User extends BaseEntity<User> {
   @Column()
   name: string;
 
-  @ManyToOne(() => UserFavorites, (userFavorites) => userFavorites.user)
+  @OneToMany(() => UserFavorites, (userFavorites) => userFavorites.user)
   favorites: UserFavorites[];
 
   @BeforeInsert()

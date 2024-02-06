@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../database/common/baseEntity';
 import { User } from './user.pg.entity';
 import { Word } from './word.pg.entity';
@@ -11,9 +11,11 @@ export class UserFavorites extends BaseEntity<UserFavorites> {
   @Column()
   wordId: string;
 
-  @OneToMany(() => User, (user) => user.favorites)
+  @ManyToOne(() => User, (user) => user.favorites)
+  @JoinColumn({ name: 'userId' })
   user: User[];
 
-  @OneToMany(() => Word, (word) => word.favorites)
+  @ManyToOne(() => Word, (word) => word.favorites)
+  @JoinColumn({ name: 'wordId' })
   word: Word[];
 }
