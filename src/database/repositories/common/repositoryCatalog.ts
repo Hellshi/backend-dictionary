@@ -46,7 +46,6 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
 
   async startTransaction(): Promise<void> {
     if (!this.entityManager?.queryRunner) {
-      console.error('aaa');
       return;
       //throw Error("Unable to start transaction!");
     }
@@ -81,7 +80,10 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
     );
   }
   get mongoCache(): CacheRepository {
-    return this.getRepo<CacheRepository>('cache', () => new CacheRepository());
+    return this.getRepo<CacheRepository>(
+      'mongoCache',
+      () => new CacheRepository(),
+    );
   }
 
   //PLOP INSERT REPOSITORY

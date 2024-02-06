@@ -11,7 +11,6 @@ export const RegisterHistoryDecorator = (): MethodDecorator => {
         user: { userId },
       } = context.request;
       const data = await originalMethod.apply(this, args);
-
       const repositories = await repositoryCatalogFactory();
       await repositories.userHistory.insert({
         word: args[0],

@@ -16,16 +16,6 @@ export class ProxyController {
     private readonly favoritesService: FavoritesService,
   ) {}
 
-  @Get('en/:word')
-  @JwtAuth()
-  @RegisterHistoryDecorator()
-  async define(
-    @Param('word') word: string,
-    @ContextDecorator() _context: { request: Request },
-  ) {
-    return this.proxyService.define(word);
-  }
-
   @Post('en/:word/favorite')
   @JwtAuth()
   async favorite(@Param('word') word: string, @Req() req: any) {
@@ -44,5 +34,15 @@ export class ProxyController {
     } = req;
 
     await this.favoritesService.unfavoriteWord({ userId, word });
+  }
+
+  @Get('en/:word')
+  @JwtAuth()
+  @RegisterHistoryDecorator()
+  async define(
+    @Param('word') word: string,
+    @ContextDecorator() _context: { request: Request },
+  ) {
+    return this.proxyService.define(word);
   }
 }

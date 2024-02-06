@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { WordObject } from 'src/app/proxy/adapters/types/wordsApiResponse';
+import { MongoDbDataSource } from 'src/config/mongodb.config';
+import repositoryCatalogFactory from 'src/database/repositories/common/factory/genericRepositoru.factory';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 
 @Injectable()
@@ -9,7 +11,7 @@ export class MongoAdapterCacheService {
     private readonly repositoryCatalog: RepositoryCatalog,
   ) {}
   async set<T>({ key, value }: { key: string; value: T }): Promise<void> {
-    await this.repositoryCatalog.mongoCache.insert({
+    await this.repositoryCatalog.mongoCache.set({
       key,
       value: JSON.stringify(value),
     });

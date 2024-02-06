@@ -11,6 +11,6 @@ import { MongoAdapterCacheService } from './adapters/mongoAdapter/mongoAdapterCa
     GenericRepositoryProvider,
     RepositoryCatalog,
   ],
-  exports: [CacheService],
+  exports: [CacheService, MongoAdapterCacheService],
 })
 export class CacheModule {}
