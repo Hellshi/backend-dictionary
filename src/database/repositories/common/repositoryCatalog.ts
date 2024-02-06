@@ -8,6 +8,7 @@ import { UserRepository } from '../user/user.repository';
 import { WordRepository } from '../word/word.repository';
 import { UserHistoryRepository } from '../userHistory/userHistory.repository';
 import { UserFavoritesRepository } from '../userFavorites/userFavorites.repository';
+import { CacheRepository } from '../cache/cache.repository';
 //PLOP IMPORT REPOSITORY
 
 @Injectable()
@@ -79,5 +80,9 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
       () => new UserFavoritesRepository(),
     );
   }
+  get mongoCache(): CacheRepository {
+    return this.getRepo<CacheRepository>('cache', () => new CacheRepository());
+  }
+
   //PLOP INSERT REPOSITORY
 }
