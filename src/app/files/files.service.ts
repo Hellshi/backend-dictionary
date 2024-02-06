@@ -35,14 +35,17 @@ export class FilesService {
   }
 
   removeFile(file: string) {
-    return this.fs.unlinkSync(file);
+    console.log(
+      `[MIGRATION]: CHUNK ${file} MIGRATED WITH SUCCESS, REMOVING FILE...`,
+    );
+    return this.fs.unlinkSync(`${this.folder}/${file}`);
   }
 
   readDirSync(folder: string = this.folder) {
     return this.fs.readdirSync(folder);
   }
 
-  readChunks(file: string) {
+  async readChunks(file: string) {
     const data = this.fs.readFileSync(`${this.folder}/${file}`, {
       encoding: 'utf8',
     });

@@ -22,7 +22,7 @@ export class WordsService {
   async migrateByChunks(files: string[]) {
     for (const file of files) {
       try {
-        const chunk = this.fileService.readChunks(file);
+        const chunk = await this.fileService.readChunks(file);
 
         await this.repositoryCatalog.word.migrateWords(chunk);
 
