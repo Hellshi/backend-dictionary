@@ -7,6 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
 import { WordRepository } from '../word/word.repository';
 import { UserHistoryRepository } from '../userHistory/userHistory.repository';
+import { UserFavoritesRepository } from '../userFavorites/userFavorites.repository';
 //PLOP IMPORT REPOSITORY
 
 @Injectable()
@@ -70,6 +71,12 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
     return this.getRepo<UserHistoryRepository>(
       'user-history',
       () => new UserHistoryRepository(),
+    );
+  }
+  get userFavorites(): UserFavoritesRepository {
+    return this.getRepo<UserFavoritesRepository>(
+      'userFavorites',
+      () => new UserFavoritesRepository(),
     );
   }
   //PLOP INSERT REPOSITORY

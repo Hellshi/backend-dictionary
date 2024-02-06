@@ -5,11 +5,15 @@ import { CreateUserDto } from './types/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { FavoritesService } from '../favorites/favorites.service';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly favoritesService: FavoritesService,
+  ) {}
 
   @Post()
   @BasicAuth()
@@ -39,5 +43,14 @@ export class UserController {
     } = req;
 
     return this.userService.getUserProfile(userId);
+  }
+
+  @Get('me/favorites')
+  @JwtAuth()
+  async getFavorites(@Request() req: any, @Query() pagination: PaginationDto) {
+    const {
+      user: { userId },
+    } = req;
+    return this.favoritesService.getFavorites({ userId, pagination });
   }
 }

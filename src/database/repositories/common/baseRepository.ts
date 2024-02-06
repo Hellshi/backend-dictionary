@@ -5,6 +5,7 @@ import {
   EntityManager,
   FindOneOptions,
   FindOperator,
+  FindOptionsWhere,
   ILike,
   In,
   LessThan,
@@ -30,9 +31,7 @@ export default class BaseRepository<T extends ObjectLiteral> {
     this.objectType = objectType as new () => T
     this.repository = repository
   }
-  /**
-   * This method will release the query runner at the end of the query execution
-   */
+
 
   async getById(
     object: Partial<T>,
@@ -145,16 +144,6 @@ export default class BaseRepository<T extends ObjectLiteral> {
   }
 
 
-  async deleteWhereIn(
-    ids: string[] | number[],
-    queryRunner?: QueryRunner
-  ): Promise<void> {
-    if (queryRunner) {
-      await queryRunner.manager.delete(this.objectType, ids)
-      return
-    }
-    await this.repository.delete(ids)
-  }
 
   async findOne<TValue>(
     criteria: Criteria<T> | Criteria<T>[],
@@ -166,6 +155,38 @@ export default class BaseRepository<T extends ObjectLiteral> {
     return this.repository.findOne({
         where: criteria
       })
+  }
+
+  async findAllWithLikeAndCriteriaAndCountWithOr({
+    criteria,
+    criteriaLike,
+    criteriaIn,
+    withDeleted = false,
+    orderBy,
+    relations,
+    pagination: { page = 1, take = 10 },
+  }: FiltersParams<T>): Promise<PaginationReturn<T>> {
+    const filtersEqual = Object.keys(criteria || {}).map((key) => {
+      return { [key]: criteria[key] };
+    }) as FindOptionsWhere<T>[];
+
+    const filters = Object.keys(criteriaLike || {}).map((key) => {
+      return { [key]: ILike(`%${criteriaLike[key]}%`) };
+    }) as FindOptionsWhere<T>[];
+
+    const filtersIn = Object.keys(criteriaIn || {}).map((key) => {
+      return { [key]: In(criteriaIn[key]) };
+    }) as FindOptionsWhere<T>[];
+
+    const [data, count] = await this.repository.findAndCount({
+      where: [...filtersEqual, ...filters, ...filtersIn] || [],
+      skip: (page - 1) * take,
+      take,
+      withDeleted,
+      order: orderBy || {},
+      relations,
+    });
+    return pagination(data, page, take, count);
   }
 
   async findOneOrFail<TValue>(
@@ -210,7 +231,6 @@ export default class BaseRepository<T extends ObjectLiteral> {
         relations
       })
   }
-
 
   count(criteria: Criteria<T> | Criteria<T>[]): Promise<number> {
     return this.repository.count({

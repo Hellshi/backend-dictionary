@@ -11,4 +11,8 @@ export class WordsService {
   registerUserHistory({ word, userId }: { word: string; userId: string }) {
     return this.repositoryCatalog.userHistory.insert({ word, userId });
   }
+
+  registerWord({ word }: { word: string }) {
+    return this.repositoryCatalog.word.insert({ word });
+  }
 }
