@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 import { FilesService } from '../files/files.service';
-import { MigrationStatus } from 'src/database/repositories/wordMigrationStatus/types/migrationStatus.enum';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class WordsService {
@@ -15,8 +15,16 @@ export class WordsService {
     return this.repositoryCatalog.userHistory.insert({ word, userId });
   }
 
-  registerWord({ word }: { word: string }) {
-    return this.repositoryCatalog.word.insert({ word });
+  async list({
+    search,
+    pagination,
+  }: {
+    search: string;
+    pagination: PaginationDto;
+  }) {
+    return this.repositoryCatalog.word.findAllWithLikeAndCriteriaAndCountWithOr(
+      { criteriaLike: { word: search }, pagination },
+    );
   }
 
   async migrateByChunks(files: string[]) {
@@ -39,6 +47,8 @@ export class WordsService {
         await this.repositoryCatalog.wordMigrationStatus.checkIfMigrationMayStart();
 
       if (!migrationMayStart) {
+        console.log('[MIGRATION]: Started');
+
         await this.repositoryCatalog.wordMigrationStatus.startMigration();
 
         this.fileService.writeChunks();
@@ -48,6 +58,8 @@ export class WordsService {
         await this.migrateByChunks(files);
 
         await this.repositoryCatalog.wordMigrationStatus.finishMigration();
+
+        console.log('[MIGRATION]: FINISHED');
       }
     } catch (error) {
       await this.repositoryCatalog.wordMigrationStatus.errorMigration();

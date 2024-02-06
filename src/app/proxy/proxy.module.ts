@@ -4,8 +4,9 @@ import { ProxyController } from './proxy.controller';
 import { AxiosAdapterService } from './adapters/axiosAdapter/axiosAdapter.service';
 import { FavoritesModule } from '../favorites/favorites.module';
 import { CacheModule } from '../cache/cache.module';
+import { WordsModule } from '../words/words.module';
 @Module({
-  imports: [FavoritesModule, CacheModule],
+  imports: [FavoritesModule, CacheModule, WordsModule],
   controllers: [ProxyController],
   providers: [ProxyService, AxiosAdapterService],
 })

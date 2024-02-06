@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { ProxyService } from './proxy.service';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
 import { ApiTags } from '@nestjs/swagger';
@@ -7,6 +15,8 @@ import {
   RegisterHistoryDecorator,
 } from 'src/common/decorators/register-history.decorator';
 import { FavoritesService } from '../favorites/favorites.service';
+import { WordsService } from '../words/words.service';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @ApiTags('proxy')
 @Controller('entries')
@@ -14,7 +24,19 @@ export class ProxyController {
   constructor(
     private readonly proxyService: ProxyService,
     private readonly favoritesService: FavoritesService,
+    private readonly wordService: WordsService,
   ) {}
+
+  @Get('en')
+  @JwtAuth()
+  async list(
+    @Query()
+    pagination: PaginationDto,
+    @Query('search')
+    search: string,
+  ) {
+    return this.wordService.list({ search, pagination });
+  }
 
   @Post('en/:word/favorite')
   @JwtAuth()
@@ -38,7 +60,7 @@ export class ProxyController {
 
   @Get('en/:word')
   @JwtAuth()
-  @RegisterHistoryDecorator()
+  //@RegisterHistoryDecorator()
   async define(
     @Param('word') word: string,
     @ContextDecorator() _context: { request: Request },
