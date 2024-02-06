@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { MongoAdapterCacheService } from './adapters/mongoAdapter/mongoAdapterCache.service';
+import { WordObject } from '../proxy/adapters/types/wordsApiResponse';
 
 @Injectable()
 export class CacheService {
   constructor(private readonly cacheService: MongoAdapterCacheService) {}
 
-  async set<T>(key: string, value: T): Promise<void> {
-    await this.cacheService.set(
-      key,
-      JSON.stringify({ data: value, time: new Date() }),
-    );
+  async setWordCache(word: WordObject): Promise<void> {
+    await this.cacheService.registerWordCache(word);
   }
 
-  async get<T>(key: string): Promise<T | undefined> {
-    console.log(`getting ${key}`);
-    return JSON.parse(await this.cacheService.get(key));
+  async getWordCache(key: string): Promise<WordObject> {
+    return this.cacheService.getWordFromCache({
+      word: key,
+    }) as unknown as WordObject;
   }
 }
