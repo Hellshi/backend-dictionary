@@ -16,7 +16,7 @@ export class WordsService {
   }
 
   async list({
-    search,
+    search = '',
     pagination,
   }: {
     search: string;

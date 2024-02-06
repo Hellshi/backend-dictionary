@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ProxyService } from './proxy.service';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   ContextDecorator,
   RegisterHistoryDecorator,
@@ -29,11 +29,12 @@ export class ProxyController {
 
   @Get('en')
   @JwtAuth()
+  @ApiQuery({ name: 'search', required: false })
   async list(
     @Query()
     pagination: PaginationDto,
     @Query('search')
-    search: string,
+    search?: string,
   ) {
     return this.wordService.list({ search, pagination });
   }
