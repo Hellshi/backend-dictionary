@@ -23,7 +23,7 @@ export class MongoAdapterCacheService {
     if (!cache) {
       return undefined;
     }
-    return cache.value;
+    return JSON.parse(cache.value);
   }
 
   registerWordCache(word: WordObject) {
@@ -32,6 +32,6 @@ export class MongoAdapterCacheService {
 
   async getWordFromCache({ word }: { word: string }) {
     const cache = await this.get<WordObject>(word);
-    return JSON.stringify(cache);
+    return cache;
   }
 }

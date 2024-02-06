@@ -9,13 +9,14 @@ export class CacheRepository extends BaseRepository<Cache> {
 
   // Typeorm do not support native ttl creation
   async createTTLIndex(): Promise<void> {
-    if (!(await this.checkIndexes()))
+    if (!(await this.checkIfTTLExists())) {
       await this.repository.manager
         .getMongoRepository(Cache)
         .createCollectionIndex({ createdAt: 1 }, { expireAfterSeconds: 3600 });
+    }
   }
 
-  async checkIndexes() {
+  async checkIfTTLExists() {
     return this.repository.manager
       .getMongoRepository(Cache)
       .collectionIndexExists('createdAt_1');
