@@ -7,9 +7,17 @@ export class CacheRepository extends BaseRepository<Cache> {
     super(MongoDbDataSource.getRepository(Cache), Cache);
   }
 
-  async set({ key, value }: { key: string; value: string }): Promise<void> {
-    await this.repository.manager
+  // Typeorm do not support native ttl creation
+  async createTTLIndex(): Promise<void> {
+    if (!(await this.checkIndexes()))
+      await this.repository.manager
+        .getMongoRepository(Cache)
+        .createCollectionIndex({ createdAt: 1 }, { expireAfterSeconds: 3600 });
+  }
+
+  async checkIndexes() {
+    return this.repository.manager
       .getMongoRepository(Cache)
-      .save({ key, value, createdAt: new Date() });
+      .collectionIndexExists('createdAt_1');
   }
 }
