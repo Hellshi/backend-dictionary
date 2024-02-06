@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ProxyService } from './proxy.service';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   ContextDecorator,
   RegisterHistoryDecorator,
@@ -61,7 +61,8 @@ export class ProxyController {
 
   @Get('en/:word')
   @JwtAuth()
-  //@RegisterHistoryDecorator()
+  @ApiParam({ name: 'word', required: true })
+  @RegisterHistoryDecorator()
   async define(
     @Param('word') word: string,
     @ContextDecorator() _context: { request: Request },
