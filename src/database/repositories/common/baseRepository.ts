@@ -186,7 +186,7 @@ export default class BaseRepository<T extends ObjectLiteral> {
       order: orderBy || {},
       relations,
     });
-    return pagination(data, page, take, count);
+    return pagination(data, Number(page), Number(take), Number(count));
   }
 
   async findOneOrFail<TValue>(

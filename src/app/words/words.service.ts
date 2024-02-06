@@ -22,9 +22,14 @@ export class WordsService {
     search: string;
     pagination: PaginationDto;
   }) {
-    return this.repositoryCatalog.word.findAllWithLikeAndCriteriaAndCountWithOr(
-      { criteriaLike: { word: search }, pagination },
-    );
+    const { data: words, pagination: resultPagination } =
+      await this.repositoryCatalog.word.findAllWithLikeAndCriteriaAndCountWithOr(
+        { criteriaLike: { word: search }, pagination },
+      );
+
+    const results = words.map((word) => word.word);
+
+    return { results, pagination: resultPagination };
   }
 
   async migrateByChunks(files: string[]) {
