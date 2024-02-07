@@ -24,9 +24,10 @@ export class UserController {
   @Get('me/history')
   @JwtAuth()
   async getHistory(
+    @Request()
+    req: any,
     @Query()
-    pagination: PaginationDto,
-    @Request() req: any,
+    pagination?: PaginationDto,
   ) {
     const {
       user: { userId },

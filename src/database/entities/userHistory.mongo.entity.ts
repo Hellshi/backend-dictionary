@@ -19,4 +19,6 @@ export class UserHistory {
 
   @CreateDateColumn()
   added: Date;
+
+  count: any;
 }

@@ -4,6 +4,7 @@ import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalo
 import { CreateUserDto } from './types/create-user.dto';
 import { CatchAll } from '@greguintow/catch-decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { Pagination } from 'src/database/repositories/common/interfaces/baseRepository.interface';
 
 @Injectable()
 export class UserService {
@@ -26,7 +27,7 @@ export class UserService {
     pagination,
   }: {
     userId: string;
-    pagination: PaginationDto;
+    pagination: Pagination;
   }) {
     return this.repositoryCatalog.userHistory.findHistoryPaginated({
       pagination,
