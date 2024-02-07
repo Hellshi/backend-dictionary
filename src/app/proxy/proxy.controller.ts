@@ -7,6 +7,7 @@ import {
   Query,
   Req,
   Res,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ProxyService } from './proxy.service';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
@@ -33,12 +34,16 @@ export class ProxyController {
   @JwtAuth()
   @ApiQuery({ name: 'search', required: false })
   async list(
-    @Query()
+    @Query(ValidationPipe)
     pagination: CursorPaginationDto,
     @Query('search')
     search?: string,
   ) {
-    return this.wordService.list({ search, pagination });
+    try {
+      return this.wordService.list({ search, pagination });
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Post('en/:word/favorite')
