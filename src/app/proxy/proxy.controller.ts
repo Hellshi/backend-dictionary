@@ -7,6 +7,7 @@ import {
   Query,
   Req,
   Res,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ProxyService } from './proxy.service';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
@@ -14,10 +15,10 @@ import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   ContextDecorator,
   RegisterHistoryDecorator,
-} from 'src/common/decorators/register-history.decorator';
+} from '../../common/decorators/register-history.decorator';
 import { FavoritesService } from '../favorites/favorites.service';
 import { WordsService } from '../words/words.service';
-import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
+import { CursorPaginationDto } from '../../database/repositories/common/dto/cursorPagination.dto';
 import { Response, Request } from 'express';
 
 @ApiTags('proxy')
@@ -33,12 +34,16 @@ export class ProxyController {
   @JwtAuth()
   @ApiQuery({ name: 'search', required: false })
   async list(
-    @Query()
+    @Query(ValidationPipe)
     pagination: CursorPaginationDto,
     @Query('search')
     search?: string,
   ) {
-    return this.wordService.list({ search, pagination });
+    try {
+      return this.wordService.list({ search, pagination });
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Post('en/:word/favorite')

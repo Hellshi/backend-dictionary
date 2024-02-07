@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
+import RepositoryCatalog from '../../database/repositories/common/repositoryCatalog';
 import { FilesService } from '../files/files.service';
-import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
-import Config from 'src/config/envConfig';
+import { CursorPaginationDto } from '../../database/repositories/common/dto/cursorPagination.dto';
+import Config from '../../config/envConfig';
 
 @Injectable()
 export class WordsService {

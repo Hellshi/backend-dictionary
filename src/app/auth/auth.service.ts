@@ -1,8 +1,8 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { User } from 'src/database/entities/user.pg.entity';
-import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
+import { User } from '../../database/entities/user.pg.entity';
+import RepositoryCatalog from '../../database/repositories/common/repositoryCatalog';
 import { CreateUserDto } from '../user/types/create-user.dto';
 
 @Injectable()

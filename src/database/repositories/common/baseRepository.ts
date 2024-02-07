@@ -8,6 +8,8 @@ import {
 } from 'typeorm';
 
 import { Criteria } from './IRepository';
+import { Catch, NotFoundException } from '@nestjs/common';
+import { CatchAll } from '@greguintow/catch-decorator';
 
 export default class BaseRepository<T extends ObjectLiteral> {
   protected repository: Repository<T>;
@@ -203,6 +205,9 @@ export default class BaseRepository<T extends ObjectLiteral> {
     });
   }
 
+  @CatchAll(() => {
+    throw new NotFoundException('Not found');
+  })
   async findOneOrFail<TValue>(
     criteria: Criteria<T> | Criteria<T>[],
     queryRunner?: QueryRunner,

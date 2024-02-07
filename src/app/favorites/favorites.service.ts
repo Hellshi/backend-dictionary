@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
-import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
+import { CursorPaginationDto } from '../../database/repositories/common/dto/cursorPagination.dto';
+import RepositoryCatalog from '../../database/repositories/common/repositoryCatalog';
 
 @Injectable()
 export class FavoritesService {

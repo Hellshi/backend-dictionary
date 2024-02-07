@@ -1,5 +1,5 @@
-import PostgresDataSource from 'src/config/postgres.config';
-import { Word } from 'src/database/entities/word.pg.entity';
+import PostgresDataSource from '../../../config/postgres.config';
+import { Word } from '../../../database/entities/word.pg.entity';
 import BaseRepository from '../common/baseRepository';
 import { CursorPagination } from '../common/interfaces/baseRepository.interface';
 
