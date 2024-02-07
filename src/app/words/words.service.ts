@@ -22,7 +22,7 @@ export class WordsService {
     search: string;
     pagination: PaginationDto;
   }) {
-    const { data: words, pagination: resultPagination } =
+    const { results: words, pagination: resultPagination } =
       await this.repositoryCatalog.word.findAllWithLikeAndCriteriaAndCountWithOr(
         { criteriaLike: { word: search }, pagination },
       );

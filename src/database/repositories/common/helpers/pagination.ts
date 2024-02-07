@@ -5,7 +5,7 @@ export function pagination<T>(
   count: number,
 ) {
   return {
-    data,
+    results: data,
     pagination: {
       currentPage: page,
       limitPerPage: take,

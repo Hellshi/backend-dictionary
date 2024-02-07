@@ -18,7 +18,7 @@ export type OrderBy<T> = {
 };
 
 export type PaginationReturn<T> = {
-  data: T[];
+  results: T[];
   pagination: PaginationExtendedInfo;
 };
 export type PaginationExtendedInfo = {
