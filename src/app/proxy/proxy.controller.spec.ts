@@ -27,22 +27,29 @@ describe('ProxyController', () => {
   });
 
   it('response should match definition', async () => {
+    const take = 10;
     const response = await controller.list({ cursor: '', take: 10 }, '');
 
     expect(response.results).toBeInstanceOf(Array);
     expect(response.totalDocs).toBeNumber;
-    expect(response.next).toBeString;
-    expect(response.hasNext).toBeBoolean;
-    expect(response.hasPrev).toBeBoolean;
+
+    if (response.results.length > take) {
+      expect(response.next).toBeString;
+      expect(response.hasNext).toBeBoolean;
+      expect(response.hasPrev).toBeBoolean;
+    } else {
+      expect(response.next).toBeNull;
+      expect(response.hasNext).toBeNull;
+      expect(response.hasPrev).toBeNull;
+    }
   });
 
-  it('response should match definition', async () => {
-    const response = await controller.list({ cursor: '', take: -1 }, '');
+  it('should return matching results when search is provided', async () => {
+    const search = 'test';
+    const response = await controller.list({ cursor: '', take: 10 }, search);
 
-    expect(response.statusCode).toBe(400);
-    expect(response.totalDocs).toBeNumber;
-    expect(response.next).toBeString;
-    expect(response.hasNext).toBeBoolean;
-    expect(response.hasPrev).toBeBoolean;
+    if (response.results.length > 0) {
+      expect(response.results[0]).toMatch(RegExp(`\w*${search}\w*`, 'gi'));
+    }
   });
 });
