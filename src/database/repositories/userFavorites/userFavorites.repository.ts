@@ -9,6 +9,8 @@ export class UserFavoritesRepository extends BaseRepository<UserFavorites> {
     super(PostgresDataSource.getRepository(UserFavorites), UserFavorites);
   }
 
+  readonly queryAlias = 'userFavorites';
+
   async unfavoriteWord({ userId, word }: { userId: string; word: string }) {
     return this.repository.delete({
       userId,
@@ -18,8 +20,8 @@ export class UserFavoritesRepository extends BaseRepository<UserFavorites> {
 
   private async getCount(userId: any) {
     return this.repository
-      .createQueryBuilder('userFavorites')
-      .where('userFavorites.userId = :userId', { userId })
+      .createQueryBuilder(this.queryAlias)
+      .where(`${this.queryAlias}.userId = :userId`, { userId })
       .getCount();
   }
 
@@ -32,15 +34,26 @@ export class UserFavoritesRepository extends BaseRepository<UserFavorites> {
   }) {
     const count = await this.getCount(userId);
 
-    const response = await this.repository
-      .createQueryBuilder('userFavorites')
-      .leftJoinAndSelect('userFavorites.word', 'word')
-      .where('userFavorites.userId = :userId', { userId })
-      .select(['word.word as word', 'userFavorites.createdAt AS added'])
+    const query = this.repository
+      .createQueryBuilder(this.queryAlias)
+      .leftJoinAndSelect(`${this.queryAlias}.word`, 'word')
+      .where(`${this.queryAlias}.userId = :userId`, { userId })
+      .select([
+        'word.word as word',
+        `${this.queryAlias}.createdAt AS added`,
+        `${this.queryAlias}.id AS id`,
+      ])
       .skip((page - 1) * take)
-      .take(take)
-      .getRawMany();
+      .limit(take);
 
-    return paginationHelper(response, page, take, count);
+    const test = await this.paginateByCursor({
+      limit: 10,
+      query,
+      queryAlias: this.queryAlias,
+      cursor: '83f1d63a-bee6-42f7-8233-75e8a6604954',
+    });
+    console.log(test);
+
+    //return paginationHelper(response, page, take, count);
   }
 }

@@ -16,6 +16,7 @@ import {
   ObjectType,
   QueryRunner,
   Repository,
+  SelectQueryBuilder,
 } from 'typeorm'
 
 
@@ -155,6 +156,38 @@ export default class BaseRepository<T extends ObjectLiteral> {
     return this.repository.findOne({
         where: criteria
       })
+  }
+
+  async paginateByCursor({ cursor, limit, query, queryAlias }:{cursor?: string, limit: number; query: SelectQueryBuilder<T>; queryAlias: string}): Promise<any> {
+
+    if (cursor) {
+      query.where(`${queryAlias}.id < :cursor`, { cursor });
+    }
+
+    const [results, totalDocs] = await Promise.all([
+      query.orderBy(`${queryAlias}.id`, 'DESC').limit(limit).getRawMany(),
+      this.repository.count()
+    ]);
+
+    const hasNext = results.length === limit;
+    const hasPrev = !!cursor;
+
+    let previous = null;
+    let next = null;
+
+    if (results.length > 0) {
+      next = results[results.length - 1].id;
+      previous = results[0].id;
+    }
+
+    return {
+      results,
+      totalDocs,
+      previous,
+      next,
+      hasNext,
+      hasPrev,
+    };
   }
 
   async findAllWithLikeAndCriteriaAndCountWithOr({

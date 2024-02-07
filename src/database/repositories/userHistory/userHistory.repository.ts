@@ -1,7 +1,6 @@
 import { UserHistory } from 'src/database/entities/userHistory.mongo.entity';
 import BaseRepository from '../common/baseRepository';
 import { MongoDbDataSource } from 'src/config/mongodb.config';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { pagination as paginationHelper } from '../common/helpers/pagination';
 import { findUserHistoryByIdPaginated } from './agregations/findUserHistoryByIdPaginated';
 import { countByUserId } from './agregations/countByUserId';
