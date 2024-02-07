@@ -1,6 +1,6 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 import { Request, Response } from 'express';
-import repositoryCatalogFactory from 'src/database/repositories/common/factory/genericRepositoru.factory';
+import repositoryCatalogFactory from '../../database/repositories/common/factory/genericRepositoru.factory';
 
 export const RegisterHistoryDecorator = (): MethodDecorator => {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {

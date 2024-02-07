@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import axios from 'axios';
-import Config from 'src/config/envConfig';
+import Config from '../../../../config/envConfig';
 import { AxiosProxyUrl } from './types/axiosAdapter';
 import { AxiosResponse } from 'axios';
 

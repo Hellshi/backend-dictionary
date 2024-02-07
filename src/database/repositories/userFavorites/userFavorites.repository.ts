@@ -1,5 +1,5 @@
-import PostgresDataSource from 'src/config/postgres.config';
-import { UserFavorites } from 'src/database/entities/userFavorites.pg.entity';
+import PostgresDataSource from '../../../config/postgres.config';
+import { UserFavorites } from '../../../database/entities/userFavorites.pg.entity';
 import BaseRepository from '../common/baseRepository';
 import { CursorPagination } from '../common/interfaces/baseRepository.interface';
 

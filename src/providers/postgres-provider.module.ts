@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MongoDbDataSource } from 'src/config/mongodb.config';
-import PostgresDataSource from 'src/config/postgres.config';
+import { MongoDbDataSource } from '../config/mongodb.config';
+import PostgresDataSource from '../config/postgres.config';
 
 @Module({
   imports: [

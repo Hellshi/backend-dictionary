@@ -2,7 +2,7 @@
 import { EntityManager } from 'typeorm';
 
 import IRepositoryCatalog from './interfaces/repositoryCatalog';
-import PostgresDataSource from 'src/config/postgres.config';
+import PostgresDataSource from '../../../config/postgres.config';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
 import { WordRepository } from '../word/word.repository';
@@ -12,7 +12,6 @@ import { CacheRepository } from '../cache/cache.repository';
 import { WordMigrationStatusRepository } from '../wordMigrationStatus/wordMigrationStatus.repository';
 //PLOP IMPORT REPOSITORY
 
-@Injectable()
 export default class RepositoryCatalog implements IRepositoryCatalog {
   private entityManager: EntityManager;
 
@@ -35,7 +34,7 @@ export default class RepositoryCatalog implements IRepositoryCatalog {
       return cached as TRepo;
     }
 
-    if (!this.entityManager.queryRunner?.isTransactionActive)
+    if (!this.entityManager?.queryRunner?.isTransactionActive)
       this.refreshQueryRunner();
 
     const repoInstance = factory();

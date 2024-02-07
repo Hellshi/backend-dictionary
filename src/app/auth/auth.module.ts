@@ -9,9 +9,9 @@ import { BasicStrategy } from './strategies/basic.strategy';
 import { UserModule } from '../user/user.module';
 
 import { LocalStrategy } from './strategies/local.strategy';
-import Config from 'src/config/envConfig';
-import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
-import { GenericRepositoryProvider } from 'src/providers/repository-catalog-provider.module';
+import Config from '../../config/envConfig';
+import RepositoryCatalog from '../../database/repositories/common/repositoryCatalog';
+import { GenericRepositoryProvider } from '../../providers/repository-catalog-provider.module';
 
 @Module({
   imports: [

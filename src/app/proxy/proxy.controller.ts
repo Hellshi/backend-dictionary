@@ -14,10 +14,10 @@ import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   ContextDecorator,
   RegisterHistoryDecorator,
-} from 'src/common/decorators/register-history.decorator';
+} from '../../common/decorators/register-history.decorator';
 import { FavoritesService } from '../favorites/favorites.service';
 import { WordsService } from '../words/words.service';
-import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
+import { CursorPaginationDto } from '../../database/repositories/common/dto/cursorPagination.dto';
 import { Response, Request } from 'express';
 
 @ApiTags('proxy')

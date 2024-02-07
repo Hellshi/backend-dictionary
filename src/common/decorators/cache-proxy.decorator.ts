@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { Response } from 'express';
-import { CacheService } from 'src/app/cache/cache.service';
-import { WordsService } from 'src/app/words/words.service';
+import { CacheService } from '../../app/cache/cache.service';
+import { WordsService } from '../../app/words/words.service';
 
 export const CacheProxyResponseDecorator = (): MethodDecorator => {
   const injectService = Inject(CacheService);

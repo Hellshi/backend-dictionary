@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { WordObject } from 'src/app/proxy/adapters/types/wordsApiResponse';
-import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
+import { WordObject } from '../../../../app/proxy/adapters/types/wordsApiResponse';
+import RepositoryCatalog from '../../../../database/repositories/common/repositoryCatalog';
 
 @Injectable()
 export class MongoAdapterCacheService {
