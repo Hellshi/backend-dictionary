@@ -60,12 +60,11 @@ export class WordsService {
         console.log(
           '[MIGRATION]: OOPS it seems your words table is empty. Starting migration process...',
         );
+        await this.repositoryCatalog.wordMigrationStatus.startMigration();
 
         console.log('[MIGRATION]: downloading dictionary...');
 
         await this.fileService.downloadDictionary();
-
-        await this.repositoryCatalog.wordMigrationStatus.startMigration();
 
         console.log('[MIGRATION]: writing chunks...');
         this.fileService.writeChunks();
@@ -85,6 +84,16 @@ export class WordsService {
     } catch (error) {
       await this.repositoryCatalog.wordMigrationStatus.errorMigration();
       console.log(error);
+    }
+  }
+
+  async registerNeologism(word: string) {
+    const existingWord = await this.repositoryCatalog.word.findOne({
+      word,
+    });
+
+    if (!existingWord) {
+      await this.repositoryCatalog.word.insert({ word });
     }
   }
 }

@@ -22,7 +22,9 @@
     "migration:run": " typeorm-ts-node-commonjs -d ./src/config/postgres.config.ts migration:run "
   },
   "nodemonConfig": {
-    "ignore": ["src/app/files/dictionary/*.json"]
+    "ignore": [
+      "src/app/files/dictionary/*.json"
+    ]
   },
   "dependencies": {
     "@greguintow/catch-decorator": "^1.0.5",
@@ -38,6 +40,7 @@
     "@types/passport-http": "^0.3.11",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
+    "catch-decorator": "^2.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.1",
