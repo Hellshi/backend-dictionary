@@ -34,11 +34,9 @@ export class FavoritesService {
     userId: string;
     pagination: any;
   }) {
-    return this.repositoryCatalog.userFavorites.findAllWithLikeAndCriteriaAndCountWithOr(
-      {
-        criteria: { userId },
-        pagination,
-      },
-    );
+    return this.repositoryCatalog.userFavorites.getFavorites({
+      userId,
+      pagination,
+    });
   }
 }
