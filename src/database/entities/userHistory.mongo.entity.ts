@@ -9,7 +9,7 @@ import {
 @Entity('user_history')
 export class UserHistory {
   @ObjectIdColumn()
-  _id: ObjectId;
+  _id?: ObjectId;
 
   @Column()
   userId: string;

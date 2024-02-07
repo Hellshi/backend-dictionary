@@ -39,24 +39,12 @@ export class UserHistoryRepository extends BaseRepository<UserHistory> {
       )
       .toArray();
 
-    const hasNext = data.length === take;
-    const hasPrev = !!cursor;
-
-    let previous = null;
-    let next = null;
-
-    if (data.length > 0) {
-      next = data[data.length - 1]._id.toString();
-      previous = data[0]._id.toString();
-    }
-
-    return {
-      results: data.map(({ _id, ...rest }) => rest),
+    return this.treatResponsePagination({
+      results: data,
+      limit: take,
+      cursor: cursor,
       totalDocs: count,
-      previous,
-      next: hasNext && next,
-      hasNext,
-      hasPrev,
-    };
+      identityField: '_id',
+    });
   }
 }

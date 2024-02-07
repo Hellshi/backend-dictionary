@@ -140,6 +140,40 @@ export default class BaseRepository<T extends ObjectLiteral> {
     });
   }
 
+  async treatResponsePagination({
+    limit,
+    results,
+    totalDocs,
+    cursor,
+    identityField,
+  }: {
+    results: T[];
+    limit: number;
+    cursor?: string;
+    totalDocs: number;
+    identityField: string;
+  }) {
+    const hasNext = results.length === limit;
+    const hasPrev = !!cursor;
+
+    let previous = null;
+    let next = null;
+
+    if (results.length > 0) {
+      next = results[results.length - 1][identityField].toString();
+      previous = results[0][identityField].toString();
+    }
+
+    return {
+      results: results.map(({ id, _id, ...rest }) => rest),
+      totalDocs,
+      previous,
+      next: hasNext ? next : null,
+      hasNext,
+      hasPrev,
+    };
+  }
+
   async paginateByCursor({
     cursor,
     limit,
@@ -160,25 +194,13 @@ export default class BaseRepository<T extends ObjectLiteral> {
       this.repository.count(),
     ]);
 
-    const hasNext = results.length === limit;
-    const hasPrev = !!cursor;
-
-    let previous = null;
-    let next = null;
-
-    if (results.length > 0) {
-      next = results[results.length - 1].id;
-      previous = results[0].id;
-    }
-
-    return {
-      results: results.map(({ id, ...rest }) => rest),
+    return this.treatResponsePagination({
+      identityField: 'id',
+      limit,
+      results,
       totalDocs,
-      previous,
-      next,
-      hasNext,
-      hasPrev,
-    };
+      cursor,
+    });
   }
 
   async findOneOrFail<TValue>(
