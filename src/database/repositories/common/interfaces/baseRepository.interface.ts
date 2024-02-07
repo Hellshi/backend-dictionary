@@ -13,6 +13,11 @@ export type Pagination = {
   take?: number;
 };
 
+export type CursorPagination = {
+  cursor?: string;
+  take?: number;
+};
+
 export type OrderBy<T> = {
   [P in keyof T]?: 'ASC' | 'DESC';
 };

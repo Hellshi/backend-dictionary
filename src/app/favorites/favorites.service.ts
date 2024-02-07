@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
+import { CursorPagination } from 'src/database/repositories/common/interfaces/baseRepository.interface';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 
 @Injectable()
@@ -32,7 +34,7 @@ export class FavoritesService {
     pagination,
   }: {
     userId: string;
-    pagination: any;
+    pagination: CursorPaginationDto;
   }) {
     return this.repositoryCatalog.userFavorites.getFavorites({
       userId,

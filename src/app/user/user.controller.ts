@@ -6,6 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { FavoritesService } from '../favorites/favorites.service';
+import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -42,7 +43,10 @@ export class UserController {
 
   @Get('me/favorites')
   @JwtAuth()
-  async getFavorites(@Request() req: any, @Query() pagination: PaginationDto) {
+  async getFavorites(
+    @Request() req: any,
+    @Query() pagination: CursorPaginationDto,
+  ) {
     const {
       user: { userId },
     } = req;

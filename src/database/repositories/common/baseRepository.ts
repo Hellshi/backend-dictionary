@@ -181,7 +181,7 @@ export default class BaseRepository<T extends ObjectLiteral> {
     }
 
     return {
-      results,
+      results: results.map(({ id, ...rest  }) => rest),
       totalDocs,
       previous,
       next,
