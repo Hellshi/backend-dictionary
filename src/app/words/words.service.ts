@@ -40,9 +40,6 @@ export class WordsService {
 
         await this.repositoryCatalog.word.migrateWords(chunk);
 
-        console.log(
-          `[MIGRATION]: chunk ${file} migrated with success. Removing file...`,
-        );
         this.fileService.removeFile(file);
       } catch (error) {
         console.log(
