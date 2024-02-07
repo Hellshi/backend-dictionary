@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AxiosAdapterService } from './adapters/axiosAdapter/axiosAdapter.service';
 import { CacheProxyResponseDecorator } from 'src/common/decorators/cache-proxy.decorator';
+import { Word } from 'src/database/entities/word.pg.entity';
 
 @Injectable()
 export class ProxyService {
@@ -8,6 +9,9 @@ export class ProxyService {
 
   @CacheProxyResponseDecorator()
   async define(word: string) {
-    return this.axios.get(word);
+    const {
+      data: [response],
+    } = await this.axios.get<Word[]>(word);
+    return response;
   }
 }

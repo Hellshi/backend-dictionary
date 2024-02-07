@@ -5,9 +5,14 @@ import { AxiosAdapterService } from './adapters/axiosAdapter/axiosAdapter.servic
 import { FavoritesModule } from '../favorites/favorites.module';
 import { CacheModule } from '../cache/cache.module';
 import { WordsModule } from '../words/words.module';
+import { setProxyUrlProvider } from 'src/providers/proxy-url-injection-provider';
 @Module({
   imports: [FavoritesModule, CacheModule, WordsModule],
   controllers: [ProxyController],
-  providers: [ProxyService, AxiosAdapterService],
+  providers: [
+    ProxyService,
+    AxiosAdapterService,
+    setProxyUrlProvider('proxyUrl'),
+  ],
 })
 export class ProxyModule {}

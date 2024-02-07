@@ -33,14 +33,21 @@ export class WordsService {
   }
 
   async migrateByChunks(files: string[]) {
+    console.log('[MIGRATION]: Migrating chunks...');
     for (const file of files) {
       try {
         const chunk = await this.fileService.readChunks(file);
 
         await this.repositoryCatalog.word.migrateWords(chunk);
 
+        console.log(
+          `[MIGRATION]: chunk ${file} migrated with success. Removing file...`,
+        );
         this.fileService.removeFile(file);
       } catch (error) {
+        console.log(
+          `[MIGRATION-ERROR]: chunk ${file} failed... ${error.message}`,
+        );
         console.log(error);
       }
     }
@@ -52,10 +59,13 @@ export class WordsService {
         await this.repositoryCatalog.wordMigrationStatus.checkIfMigrationMayStart();
 
       if (!migrationMayStart) {
+        await this.fileService.downloadDictionary();
+
         console.log('[MIGRATION]: Started');
 
         await this.repositoryCatalog.wordMigrationStatus.startMigration();
 
+        console.log('[MIGRATION]: writing chunks...');
         this.fileService.writeChunks();
 
         const files = this.fileService.readDirSync();
@@ -64,7 +74,7 @@ export class WordsService {
 
         await this.repositoryCatalog.wordMigrationStatus.finishMigration();
 
-        console.log('[MIGRATION]: FINISHED');
+        console.log('[MIGRATION]: FINISHED! Enjoy your api with new words!');
       }
     } catch (error) {
       await this.repositoryCatalog.wordMigrationStatus.errorMigration();

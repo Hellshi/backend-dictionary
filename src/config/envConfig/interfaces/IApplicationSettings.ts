@@ -14,4 +14,5 @@ export default interface IApplicationSettings {
   jwtSecret: string;
   jwtExpiresIn: string;
   proxyUrl: string;
+  dictionaryListUrl: string;
 }

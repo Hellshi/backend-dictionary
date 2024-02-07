@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import fs from 'fs';
 import dictionary from './dictionary/words_dictionary.json';
+import { AxiosAdapterService } from '../proxy/adapters/axiosAdapter/axiosAdapter.service';
 @Injectable()
 export class FilesService {
+  constructor(private readonly axios: AxiosAdapterService) {}
+
   private fs = fs;
   private folder = 'chunks';
 
@@ -25,6 +28,23 @@ export class FilesService {
       this.fs.writeFileSync(
         `${this.folder}/${i}-${i + chunkSize}.json`,
         JSON.stringify(formattedChunk),
+      );
+    }
+  }
+
+  async downloadDictionary() {
+    try {
+      const { data } = await this.axios.get<any>();
+      this.fs.writeFileSync(
+        'src/app/files/dictionary/words_dictionary.json',
+        JSON.stringify(data),
+      );
+      console.log(
+        `[MIGRATION]: Dictionary downloaded, proceeding with migration...`,
+      );
+    } catch (e) {
+      console.log(
+        `[MIGRATION]: Download dictionary failed with status code ${e.code}, migration will proceed with old dictionary stored in src/files/dictionary/words_dictionary.json feel free to modify the archive and try again`,
       );
     }
   }
