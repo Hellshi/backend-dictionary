@@ -15,12 +15,6 @@ export class UserController {
     private readonly favoritesService: FavoritesService,
   ) {}
 
-  @Post()
-  @BasicAuth()
-  async create(@Body() dto: CreateUserDto) {
-    return this.userService.createUser(dto);
-  }
-
   @Get('me/history')
   @JwtAuth()
   async getHistory(

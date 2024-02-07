@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import { User } from 'src/database/entities/user.pg.entity';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
+import { CreateUserDto } from '../user/types/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -29,8 +30,14 @@ export class AuthService {
 
     return {
       token,
-      user: this.formatUserToReturn(user),
+      name: user.name,
+      id: user.id,
     };
+  }
+
+  async signup(dto: CreateUserDto) {
+    const user = await this.repositoryCatalog.user.insert(dto);
+    return this.login(user);
   }
 
   private async validatePassword(user: User, password: string) {
@@ -56,14 +63,6 @@ export class AuthService {
       expiresIn: process.env.JWT_EXPIRATION,
       secret: process.env.JWT_SECRET,
     });
-  }
-
-  private formatUserToReturn(user: User) {
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-    };
   }
 
   private formatUserPayload(user: User) {

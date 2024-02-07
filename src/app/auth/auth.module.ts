@@ -8,7 +8,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { BasicStrategy } from './strategies/basic.strategy';
 import { UserModule } from '../user/user.module';
 
-import { AppAuthController } from './app-auth.controller';
 import { LocalStrategy } from './strategies/local.strategy';
 import Config from 'src/config/envConfig';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
@@ -24,7 +23,7 @@ import { GenericRepositoryProvider } from 'src/providers/repository-catalog-prov
       signOptions: { expiresIn: Config.getSetting('jwtExpiresIn') },
     }),
   ],
-  controllers: [AuthController, AppAuthController],
+  controllers: [AuthController],
   providers: [
     AuthService,
     BasicStrategy,
