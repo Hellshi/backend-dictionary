@@ -9,11 +9,11 @@ async function bootstrap() {
 
   const documentConfig = new DocumentBuilder()
     .setTitle('Dictionary API')
-    .setDescription('Test api')
+    .setDescription(
+      'Uma api pensada para tornar a busca em dicionários: fácil, rápida, escalável e resiliente.',
+    )
     .setVersion('1.0')
     .addBearerAuth(undefined, 'defaultBearerAuth')
-    .addBearerAuth(undefined, 'refreshBearerAuth')
-    .addBasicAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, documentConfig);
