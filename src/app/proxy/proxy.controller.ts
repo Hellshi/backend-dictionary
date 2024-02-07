@@ -6,6 +6,7 @@ import {
   Post,
   Query,
   Req,
+  Res,
 } from '@nestjs/common';
 import { ProxyService } from './proxy.service';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
@@ -17,6 +18,7 @@ import {
 import { FavoritesService } from '../favorites/favorites.service';
 import { WordsService } from '../words/words.service';
 import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
+import { Response } from 'express';
 
 @ApiTags('proxy')
 @Controller('entries')
@@ -41,22 +43,32 @@ export class ProxyController {
 
   @Post('en/:word/favorite')
   @JwtAuth()
-  async favorite(@Param('word') word: string, @Req() req: any) {
+  async favorite(
+    @Param('word') word: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     const {
       user: { userId },
     } = req;
 
     await this.favoritesService.favoriteWord({ userId, word });
+    res.status(204).send();
   }
 
   @Delete('en/:word/unfavorite')
   @JwtAuth()
-  async unfavorite(@Param('word') word: string, @Req() req: any) {
+  async unfavorite(
+    @Param('word') word: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     const {
       user: { userId },
     } = req;
 
     await this.favoritesService.unfavoriteWord({ userId, word });
+    res.status(204).send();
   }
 
   @Get('en/:word')
