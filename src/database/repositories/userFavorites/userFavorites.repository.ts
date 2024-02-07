@@ -1,11 +1,7 @@
 import PostgresDataSource from 'src/config/postgres.config';
 import { UserFavorites } from 'src/database/entities/userFavorites.pg.entity';
 import BaseRepository from '../common/baseRepository';
-import {
-  CursorPagination,
-  Pagination,
-} from '../common/interfaces/baseRepository.interface';
-import { pagination as paginationHelper } from '../common/helpers/pagination';
+import { CursorPagination } from '../common/interfaces/baseRepository.interface';
 
 export class UserFavoritesRepository extends BaseRepository<UserFavorites> {
   constructor() {

@@ -16,7 +16,7 @@ import {
 } from 'src/common/decorators/register-history.decorator';
 import { FavoritesService } from '../favorites/favorites.service';
 import { WordsService } from '../words/words.service';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
 
 @ApiTags('proxy')
 @Controller('entries')
@@ -32,7 +32,7 @@ export class ProxyController {
   @ApiQuery({ name: 'search', required: false })
   async list(
     @Query()
-    pagination: PaginationDto,
+    pagination: CursorPaginationDto,
     @Query('search')
     search?: string,
   ) {

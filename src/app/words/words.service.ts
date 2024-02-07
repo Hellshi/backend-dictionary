@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 import { FilesService } from '../files/files.service';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
 
 @Injectable()
 export class WordsService {
@@ -20,16 +20,16 @@ export class WordsService {
     pagination,
   }: {
     search: string;
-    pagination: PaginationDto;
+    pagination: CursorPaginationDto;
   }) {
-    const { results: words, pagination: resultPagination } =
-      await this.repositoryCatalog.word.findAllWithLikeAndCriteriaAndCountWithOr(
-        { criteriaLike: { word: search }, pagination },
-      );
+    const results = await this.repositoryCatalog.word.list({
+      search,
+      pagination,
+    });
 
-    const results = words.map((word) => word.word);
+    results.results = results.results.map(({ word }) => word);
 
-    return { results, pagination: resultPagination };
+    return results;
   }
 
   async migrateByChunks(files: string[]) {

@@ -3,7 +3,6 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 import { CreateUserDto } from './types/create-user.dto';
 import { CatchAll } from '@greguintow/catch-decorator';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { Pagination } from 'src/database/repositories/common/interfaces/baseRepository.interface';
 
 @Injectable()

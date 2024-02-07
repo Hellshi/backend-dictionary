@@ -1,7 +1,5 @@
-import { Body, Controller, Get, Post, Query, Request } from '@nestjs/common';
+import { Controller, Get, Query, Request } from '@nestjs/common';
 import { UserService } from './user.service';
-import { BasicAuth } from '../auth/decorators/basic-auth.decorator';
-import { CreateUserDto } from './types/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
