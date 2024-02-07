@@ -1,16 +1,16 @@
-export const findUserHistoryByIdPaginated = ({
+export const findUserHistoryWithFilterPaginated = ({
   take,
-  userId,
+  filter,
   matchStage,
 }: {
-  userId: string;
+  filter: any;
   take: number;
   matchStage: any;
 }) => [
   {
     $match: {
       ...matchStage,
-      userId: { $eq: userId },
+      ...filter,
     },
   },
   {

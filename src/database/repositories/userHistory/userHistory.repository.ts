@@ -1,8 +1,8 @@
 import { UserHistory } from 'src/database/entities/userHistory.mongo.entity';
 import BaseRepository from '../common/baseRepository';
 import { MongoDbDataSource } from 'src/config/mongodb.config';
-import { findUserHistoryByIdPaginated } from './agregations/findUserHistoryByIdPaginated';
-import { countByUserId } from './agregations/countByUserId';
+import { findUserHistoryWithFilterPaginated } from './aggregations/findUserHistoryWithFilterPaginated';
+import { countByUserId } from './aggregations/countByUserId';
 import { CursorPagination } from '../common/interfaces/baseRepository.interface';
 import { ObjectId } from 'mongodb';
 
@@ -30,9 +30,13 @@ export class UserHistoryRepository extends BaseRepository<UserHistory> {
 
     const matchStage = cursor ? { _id: { $lt: new ObjectId(cursor) } } : {};
 
+    const filter = { userId: { $eq: userId } };
+
     const data = await this.repository.manager
       .getMongoRepository(UserHistory)
-      .aggregate(findUserHistoryByIdPaginated({ take, userId, matchStage }))
+      .aggregate(
+        findUserHistoryWithFilterPaginated({ take, filter, matchStage }),
+      )
       .toArray();
 
     const hasNext = data.length === take;
