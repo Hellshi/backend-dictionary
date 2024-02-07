@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { AxiosAdapterService } from '../proxy/adapters/axiosAdapter/axiosAdapter.service';
-import { setProxyUrlProvider } from 'src/providers/proxy-url-injection-provider';
+import { setProxyUrlProvider } from '../../providers/proxy-url-injection-provider';
 
 @Module({
   providers: [

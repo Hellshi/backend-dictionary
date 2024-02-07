@@ -1,9 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { AxiosAdapterService } from './adapters/axiosAdapter/axiosAdapter.service';
-import { CacheProxyResponseDecorator } from 'src/common/decorators/cache-proxy.decorator';
-import { Word } from 'src/database/entities/word.pg.entity';
+import { CacheProxyResponseDecorator } from '../../common/decorators/cache-proxy.decorator';
+import { Word } from '../../database/entities/word.pg.entity';
 import { AxiosError } from 'axios';
-import { ContextDecorator } from 'src/common/decorators/register-history.decorator';
+import { ContextDecorator } from '../../common/decorators/register-history.decorator';
 import { Response, Request } from 'express';
 
 @Injectable()

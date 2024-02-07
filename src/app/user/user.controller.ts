@@ -1,9 +1,15 @@
-import { Controller, Get, Query, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Request,
+  ValidationPipe,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
 import { FavoritesService } from '../favorites/favorites.service';
-import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
+import { CursorPaginationDto } from '../../database/repositories/common/dto/cursorPagination.dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -18,7 +24,7 @@ export class UserController {
   async getHistory(
     @Request()
     req: any,
-    @Query()
+    @Query(ValidationPipe)
     pagination?: CursorPaginationDto,
   ) {
     const {
@@ -42,7 +48,7 @@ export class UserController {
   @JwtAuth()
   async getFavorites(
     @Request() req: any,
-    @Query() pagination: CursorPaginationDto,
+    @Query(ValidationPipe) pagination: CursorPaginationDto,
   ) {
     const {
       user: { userId },

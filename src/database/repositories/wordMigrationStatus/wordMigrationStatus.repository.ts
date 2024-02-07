@@ -1,5 +1,5 @@
-import PostgresDataSource from 'src/config/postgres.config';
-import { WordMigrationStatus } from 'src/database/entities/wordMigrationStatus.pg.entity';
+import PostgresDataSource from '../../../config/postgres.config';
+import { WordMigrationStatus } from '../../../database/entities/wordMigrationStatus.pg.entity';
 import BaseRepository from '../common/baseRepository';
 import { MigrationStatus } from './types/migrationStatus.enum';
 

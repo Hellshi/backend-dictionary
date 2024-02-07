@@ -1,6 +1,6 @@
-import { UserHistory } from 'src/database/entities/userHistory.mongo.entity';
+import { UserHistory } from '../../../database/entities/userHistory.mongo.entity';
 import BaseRepository from '../common/baseRepository';
-import { MongoDbDataSource } from 'src/config/mongodb.config';
+import { MongoDbDataSource } from '../../../config/mongodb.config';
 import { findUserHistoryWithFilterPaginated } from './aggregations/findUserHistoryWithFilterPaginated';
 import { countByUserId } from './aggregations/countByUserId';
 import { CursorPagination } from '../common/interfaces/baseRepository.interface';
