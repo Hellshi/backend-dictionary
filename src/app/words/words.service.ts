@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 import { FilesService } from '../files/files.service';
 import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
+import Config from 'src/config/envConfig';
 
 @Injectable()
 export class WordsService {
@@ -56,9 +57,13 @@ export class WordsService {
         await this.repositoryCatalog.wordMigrationStatus.checkIfMigrationMayStart();
 
       if (!migrationMayStart) {
-        await this.fileService.downloadDictionary();
+        console.log(
+          '[MIGRATION]: OOPS it seems your words table is empty. Starting migration process...',
+        );
 
-        console.log('[MIGRATION]: Started');
+        console.log('[MIGRATION]: downloading dictionary...');
+
+        await this.fileService.downloadDictionary();
 
         await this.repositoryCatalog.wordMigrationStatus.startMigration();
 
@@ -71,7 +76,11 @@ export class WordsService {
 
         await this.repositoryCatalog.wordMigrationStatus.finishMigration();
 
-        console.log('[MIGRATION]: FINISHED! Enjoy your api with new words!');
+        console.log(
+          `[MIGRATION]: FINISHED! Enjoy your api with new words! Use the migration:run command to seed a user or create your own accessing http://localhost:${Config.getSetting(
+            'port',
+          )}/api#/Auth/AuthController_signup`,
+        );
       }
     } catch (error) {
       await this.repositoryCatalog.wordMigrationStatus.errorMigration();
