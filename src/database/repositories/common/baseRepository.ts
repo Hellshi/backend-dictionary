@@ -1,8 +1,5 @@
 import {
   FindOneOptions,
-  FindOptionsWhere,
-  ILike,
-  In,
   ObjectLiteral,
   ObjectType,
   QueryRunner,
@@ -11,11 +8,6 @@ import {
 } from 'typeorm';
 
 import { Criteria } from './IRepository';
-import { pagination } from './helpers/pagination';
-import {
-  FiltersParams,
-  PaginationReturn,
-} from './interfaces/baseRepository.interface';
 
 export default class BaseRepository<T extends ObjectLiteral> {
   protected repository: Repository<T>;
@@ -187,38 +179,6 @@ export default class BaseRepository<T extends ObjectLiteral> {
       hasNext,
       hasPrev,
     };
-  }
-
-  async findAllWithLikeAndCriteriaAndCountWithOr({
-    criteria,
-    criteriaLike,
-    criteriaIn,
-    withDeleted = false,
-    orderBy,
-    relations,
-    pagination: { page = 1, take = 10 },
-  }: FiltersParams<T>): Promise<PaginationReturn<T>> {
-    const filtersEqual = Object.keys(criteria || {}).map((key) => {
-      return { [key]: criteria[key] };
-    }) as FindOptionsWhere<T>[];
-
-    const filters = Object.keys(criteriaLike || {}).map((key) => {
-      return { [key]: ILike(`%${criteriaLike[key]}%`) };
-    }) as FindOptionsWhere<T>[];
-
-    const filtersIn = Object.keys(criteriaIn || {}).map((key) => {
-      return { [key]: In(criteriaIn[key]) };
-    }) as FindOptionsWhere<T>[];
-
-    const [data, count] = await this.repository.findAndCount({
-      where: [...filtersEqual, ...filters, ...filtersIn] || [],
-      skip: (page - 1) * take,
-      take,
-      withDeleted,
-      order: orderBy || {},
-      relations,
-    });
-    return pagination(data, Number(page), Number(take), Number(count));
   }
 
   async findOneOrFail<TValue>(

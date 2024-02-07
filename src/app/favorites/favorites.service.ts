@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
+import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 
 @Injectable()

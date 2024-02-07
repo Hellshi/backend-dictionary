@@ -2,9 +2,8 @@ import { Controller, Get, Query, Request } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuth } from '../auth/decorators/jwt-auth.decorator';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { FavoritesService } from '../favorites/favorites.service';
-import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
+import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
 
 @ApiTags('User')
 @Controller('user')

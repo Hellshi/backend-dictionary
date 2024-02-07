@@ -3,11 +3,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 import { CreateUserDto } from './types/create-user.dto';
 import { CatchAll } from '@greguintow/catch-decorator';
-import {
-  CursorPagination,
-  Pagination,
-} from 'src/database/repositories/common/interfaces/baseRepository.interface';
-import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
+import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
 
 @Injectable()
 export class UserService {

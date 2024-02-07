@@ -16,7 +16,7 @@ import {
 } from 'src/common/decorators/register-history.decorator';
 import { FavoritesService } from '../favorites/favorites.service';
 import { WordsService } from '../words/words.service';
-import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
+import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
 
 @ApiTags('proxy')
 @Controller('entries')
