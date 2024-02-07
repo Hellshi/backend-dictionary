@@ -1,14 +1,15 @@
 export const findUserHistoryByIdPaginated = ({
-  skip,
   take,
   userId,
+  matchStage,
 }: {
   userId: string;
   take: number;
-  skip: number;
+  matchStage: any;
 }) => [
   {
     $match: {
+      ...matchStage,
       userId: { $eq: userId },
     },
   },
@@ -16,9 +17,9 @@ export const findUserHistoryByIdPaginated = ({
     $project: {
       word: 1,
       added: 1,
-      _id: 0,
+      _id: 1,
     },
   },
-  { $skip: skip },
+  { $sort: { _id: -1 } },
   { $limit: +take },
 ];

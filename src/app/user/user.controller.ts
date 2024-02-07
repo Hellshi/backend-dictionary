@@ -20,7 +20,7 @@ export class UserController {
     @Request()
     req: any,
     @Query()
-    pagination?: PaginationDto,
+    pagination?: CursorPaginationDto,
   ) {
     const {
       user: { userId },

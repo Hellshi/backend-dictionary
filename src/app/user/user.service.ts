@@ -3,7 +3,11 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import RepositoryCatalog from 'src/database/repositories/common/repositoryCatalog';
 import { CreateUserDto } from './types/create-user.dto';
 import { CatchAll } from '@greguintow/catch-decorator';
-import { Pagination } from 'src/database/repositories/common/interfaces/baseRepository.interface';
+import {
+  CursorPagination,
+  Pagination,
+} from 'src/database/repositories/common/interfaces/baseRepository.interface';
+import { CursorPaginationDto } from 'src/common/dto/cursorPagination.dto';
 
 @Injectable()
 export class UserService {
@@ -26,7 +30,7 @@ export class UserService {
     pagination,
   }: {
     userId: string;
-    pagination: Pagination;
+    pagination: CursorPaginationDto;
   }) {
     return this.repositoryCatalog.userHistory.findHistoryPaginated({
       pagination,
