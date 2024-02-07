@@ -18,7 +18,7 @@ import {
 import { FavoritesService } from '../favorites/favorites.service';
 import { WordsService } from '../words/words.service';
 import { CursorPaginationDto } from 'src/database/repositories/common/dto/cursorPagination.dto';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 @ApiTags('proxy')
 @Controller('entries')
@@ -77,8 +77,8 @@ export class ProxyController {
   @RegisterHistoryDecorator()
   async define(
     @Param('word') word: string,
-    @ContextDecorator() _context: { request: Request },
+    @ContextDecorator() _context: { request: Request; response: Response },
   ) {
-    return this.proxyService.define(word);
+    return this.proxyService.define(word, _context);
   }
 }

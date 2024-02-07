@@ -1,5 +1,5 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import axios, { AxiosError } from 'axios';
+import { Inject, Injectable } from '@nestjs/common';
+import axios from 'axios';
 import Config from 'src/config/envConfig';
 import { AxiosProxyUrl } from './types/axiosAdapter';
 import { AxiosResponse } from 'axios';
@@ -18,12 +18,7 @@ export class AxiosAdapterService {
     try {
       return this.api.get<T>(path);
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 404) {
-          throw new NotFoundException();
-        }
-        throw error.message;
-      }
+      throw error;
     }
   }
 }

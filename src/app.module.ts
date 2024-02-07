@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { UserModule } from './app/user/user.module';
 import { WordsModule } from './app/words/words.module';
 import { PostgresProviderModule } from './providers/postgres-provider.module';
@@ -14,6 +14,7 @@ import { FavoritesModule } from './app/favorites/favorites.module';
 import { CacheModule } from './app/cache/cache.module';
 import { FilesModule } from './app/files/files.module';
 import Config from './config/envConfig';
+import { ResponseTimeMiddleware } from './common/middleware/responseTimeMiddleware';
 
 @Module({
   imports: [
@@ -40,4 +41,8 @@ import Config from './config/envConfig';
   controllers: [],
   providers: [GenericRepositoryProvider, RepositoryCatalog],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ResponseTimeMiddleware).forRoutes('*');
+  }
+}

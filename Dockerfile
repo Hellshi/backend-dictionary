@@ -11,4 +11,6 @@ RUN yarn install --frozen-lockfile && yarn run build
 
 RUN ls
 
+EXPOSE 5000
+
 CMD [ "yarn", "start"]

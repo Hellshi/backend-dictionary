@@ -1,4 +1,5 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
+import { Request, Response } from 'express';
 import repositoryCatalogFactory from 'src/database/repositories/common/factory/genericRepositoru.factory';
 
 export const RegisterHistoryDecorator = (): MethodDecorator => {
@@ -10,6 +11,7 @@ export const RegisterHistoryDecorator = (): MethodDecorator => {
       const {
         user: { userId },
       } = context.request;
+
       const data = await originalMethod.apply(this, args);
       const repositories = await repositoryCatalogFactory();
       await repositories.userHistory.insert({
@@ -26,8 +28,8 @@ export const RegisterHistoryDecorator = (): MethodDecorator => {
 
 export const ContextDecorator = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest();
-    const response = ctx.switchToHttp().getResponse();
+    const request: Request = ctx.switchToHttp().getRequest();
+    const response: Response = ctx.switchToHttp().getResponse();
     return { request, response };
   },
 );

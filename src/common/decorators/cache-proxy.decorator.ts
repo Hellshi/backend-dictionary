@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { Response } from 'express';
 import { CacheService } from 'src/app/cache/cache.service';
 import { WordsService } from 'src/app/words/words.service';
 
@@ -12,19 +13,23 @@ export const CacheProxyResponseDecorator = (): MethodDecorator => {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args) {
+      const [context] = args.filter((arg) => arg?.request && arg?.response);
       const cacheService: CacheService = this.cacheService;
       const wordsService: WordsService = this.wordsService;
+
+      const { response } = context;
 
       const cachedWord = await cacheService.getWordCache(args[0]);
 
       if (cachedWord) {
+        response.setHeader('x-cache', 'values HIT');
         return cachedWord;
       }
 
       const data = await originalMethod.apply(this, args);
       await cacheService.setWordCache(data);
       await wordsService.registerNeologism(args[0]);
-
+      response.setHeader('x-cache', 'values MISS');
       return data;
     };
 
