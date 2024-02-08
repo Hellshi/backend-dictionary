@@ -7,9 +7,8 @@ services:
       POSTGRES_USER: dictionaryapi
       POSTGRES_DB: dictionaryapi
     ports:
-      - ${DATABASE_PORT}:${DATABASE_PORT}
-    volumes:
-      - postgres-dictionaryapi-data:/var/lib/postgresql/data
+      - 5432:5432
+
     networks:
       - dictionaryapi
 
@@ -17,25 +16,25 @@ services:
     image: mongo
     restart: unless-stopped
     ports:
-      - ${MONGODB_PORT}:${MONGODB_PORT}
+      - 27017:27017
     volumes:
       - mongodb-dictionaryapi-data:/data/db
     networks:
       - dictionaryapi
 
-  api:
-    build:
-      context: .
-    ports:
-      - ${PORT}:${PORT}
-    depends_on:
-      - postgres
-      - mongodb
-    networks:
-      - dictionaryapi
+  #api:
+  #  build:
+  #    context: .
+  #  ports:
+  #    - 5000:5000
+  #  depends_on:
+  #    - postgres
+  #    - mongodb
+  #  networks:
+  #    - dictionaryapi
 
 volumes:
-  postgres-dictionaryapi-data:
+  postgres-data:
     driver: local
   mongodb-dictionaryapi-data:
     driver: local

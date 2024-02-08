@@ -11,11 +11,11 @@ export abstract class BaseEntity<Model> {
   id: string;
 
   @ApiProperty()
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @ApiProperty()
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
   constructor(partial: Partial<Model>) {

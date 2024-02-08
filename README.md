@@ -36,19 +36,13 @@ Em busca de facilitar o teste da aplicação para a equipe, deixei o .env dispon
 
 A aplicação pode ser iniciada pelo docker utilizando o comando:  
 ``` bash 
-docker-compose up --build -d 
+docker-compose up 
 ```
-Este comando irá iniciar a aplicação e criar os containers para a utilização dos bancos de dados.
+Este comando irá iniciar criar os containers para a utilização dos bancos de dados. Em seguida rode
 
-**Nota: ao se utilizar a api fora do container Docker, as variáveis:**
-``POSTGRES_URL=postgres://dictionaryapi:dictionaryapi@postgres:5432/dictionaryapi
-MONGODB_URL=mongodb://mongodb:27017/dictionaryapi
-``
-
-**devem ser substituídas por:**
-``POSTGRES_URL=postgres://dictionaryapi:dictionaryapi@localhost:5432/dictionaryapi
-MONGODB_URL=mongodb://localhost:27017/dictionaryapi
-``
+``` bash 
+yarn migration:run && yarn start 
+```
 
 Nas configurações do typeorm o sychronize será utilizado caso o NODE_ENV seja 'development', dessa forma, gerando todas as tabelas sql necessárias para o bom funcionamento da aplicação.
 
@@ -59,5 +53,5 @@ Uma vez que a migração tenha sido finalizada, a api está pronta para ser util
 
 ## Stay in touch
 - Autora: Hellem Cristina dos Santos Lima
-- [Email](hcslimaa@gmail.com)
+- Email: [hcslimaa@gmail.com](hcslimaa@gmail.com)
 - [Linkedin](https://www.linkedin.com/in/hellem-lima-813344213/)

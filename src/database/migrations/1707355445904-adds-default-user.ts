@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { User } from '../entities/user.pg.entity';
 
-export class AddsDefaultUser1707086585575 implements MigrationInterface {
+export class AddsDefaultUser1707355445904 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const defaultUser = new User({
       name: 'Default User',
       email: 'default@user.com',
       password: 'password',
+      createdAt: new Date(),
     });
 
     await queryRunner.manager.save(defaultUser);

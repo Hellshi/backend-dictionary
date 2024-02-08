@@ -6,8 +6,7 @@ WORKDIR /var/www/api
 
 COPY . .
 
-RUN yarn install --frozen-lockfile && yarn run build
-
+RUN yarn install
 
 RUN ls
 
