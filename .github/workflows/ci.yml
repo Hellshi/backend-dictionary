@@ -1,14 +1,20 @@
 name: ci-dictionary-workflow
-on: [push]
+on: 
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   check-application:
     runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        node-version: [18.x, 19.x] #Versões nas quais o programa vai ser testado
     steps:
       - uses: actions/checkout@v2 # Baixa os arquivos que acabaram de subir
       - uses: actions/setup-node@v4 # Prepara o ambiente para o Node
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }} # Faz com que o processo rode utilizando os valores definidos na configuração strategy
       - run: npm ci
       - run: npm run build
       - run: npm run start
